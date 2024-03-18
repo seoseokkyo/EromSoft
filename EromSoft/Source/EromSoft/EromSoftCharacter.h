@@ -48,6 +48,7 @@ class AEromSoftCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SpacebarAction;
 
+
 public:
 	AEromSoftCharacter();
 	
