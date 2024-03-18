@@ -71,10 +71,6 @@ void AEromSoftCharacter::BeginPlay()
 
 void AEromSoftCharacter::Tick(float DeltaTime)
 {
-	if (bIsSpacebarPressed)
-	{
-		spacebarPressedTime += DeltaTime;
-	}	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -94,10 +90,6 @@ void AEromSoftCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AEromSoftCharacter::Look);
-
-		// Spacebar(Walk,Run / Rolling)
-		EnhancedInputComponent->BindAction(SpacebarAction, ETriggerEvent::Started, this, &AEromSoftCharacter::SpacebarPressed);
-		EnhancedInputComponent->BindAction(SpacebarAction, ETriggerEvent::Completed, this, &AEromSoftCharacter::SpacebarReleased);
 	}
 	else
 	{
@@ -141,25 +133,3 @@ void AEromSoftCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-
-void AEromSoftCharacter::SpacebarPressed(const FInputActionValue& Value)
-{
-	this->bIsSpacebarPressed = true;
-	spacebarPressedTime = 0.f;
-
-	this->GetCharacterMovement()->MaxWalkSpeed = 700;
-}
-
-void AEromSoftCharacter::SpacebarReleased(const FInputActionValue& Value)
-{
-	this->bIsSpacebarPressed = false;
-
-	if (spacebarPressedTime < 0.2)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("당신은 굴렀습니다."));
-		// 구르기 구현
-
-	}
-
-	this->GetCharacterMovement()->MaxWalkSpeed = 300;
-}

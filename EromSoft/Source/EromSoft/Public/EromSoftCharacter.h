@@ -20,6 +20,7 @@ class AEromSoftCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+public:
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
@@ -43,10 +44,6 @@ class AEromSoftCharacter : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
-
-	/** Spacebar Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* SpacebarAction;
 
 
 public:
@@ -76,12 +73,6 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-
-	// Walk&Run / Rolling Function
-	bool bIsSpacebarPressed = false;
-	float spacebarPressedTime = 0.0f;
-	void SpacebarPressed(const FInputActionValue& Value);
-	void SpacebarReleased(const FInputActionValue& Value);
 
 };
 
