@@ -18,15 +18,6 @@ void ATarnishedCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
-	//Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
-	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
-		}
-	}
-
 }
 
 void ATarnishedCharacter::Tick(float DeltaTime)
@@ -46,9 +37,11 @@ void ATarnishedCharacter::InitializeCharacterStatus()
 	CharacterStatus.AddedStaminaPoint = 10;
 
 	CharacterStatus.maxHealth = 100 + (CharacterStatus.AddedHealthPoint * 10);
+	CharacterStatus.maxMana = 100 + (CharacterStatus.AddedManaPoint * 10);
 	CharacterStatus.maxStamina = 100 + (CharacterStatus.AddedStaminaPoint * 10);
 
 	CharacterStatus.currentHealth = CharacterStatus.maxHealth;
+	CharacterStatus.currentMana = CharacterStatus.maxMana;
 	CharacterStatus.currentStamina = CharacterStatus.maxStamina;
 
 	UE_LOG(LogTemp, Warning, TEXT("Name		:	%s"), *CharacterStatus.CharacterName);
@@ -65,16 +58,6 @@ void ATarnishedCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-
-		//// Jumping
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-
-		//// Moving
-		//EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATarnishedCharacter::Move);
-
-		//// Looking
-		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATarnishedCharacter::Look);
 
 		// Spacebar(Walk,Run / Rolling)
 		EnhancedInputComponent->BindAction(SpacebarAction, ETriggerEvent::Started, this, &ATarnishedCharacter::SpacebarPressed);

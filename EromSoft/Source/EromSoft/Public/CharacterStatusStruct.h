@@ -23,6 +23,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString CharacterName;
 
+	//<< HP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 currentHealth;
 
@@ -31,7 +32,20 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 AddedHealthPoint;
+	//>>
 
+	//<< MP
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 currentMana;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 maxMana;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 AddedManaPoint;
+	//>>
+
+	//<< SP
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 currentStamina;
 
@@ -40,7 +54,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 AddedStaminaPoint;
-
+	//>>
+	
 	// 이후 공격력 계산에 사용될 예정
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 strength;

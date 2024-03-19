@@ -69,10 +69,14 @@ void AEromSoftCharacter::BeginPlay()
 	}
 
 	InitializeCharacterStatus();
-}
 
-void AEromSoftCharacter::Tick(float DeltaTime)
-{
+	//Deligate 예시
+	//this->CharacterStatChangedDeligate.BindUFunction(this, FName("PrintLog"));
+
+	if (CharacterStatChangedDeligate.IsBound())
+	{
+		CharacterStatChangedDeligate.Execute();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -135,3 +139,97 @@ void AEromSoftCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void AEromSoftCharacter::CharacterHP_Up(int32 UpValue)
+{
+	CharacterStatusChanged(ECharacterStatusType::HP, UpValue);
+}
+
+void AEromSoftCharacter::CharacterHP_Down(int32 DownValue)
+{
+	CharacterStatusChanged(ECharacterStatusType::HP, (-1 * DownValue));
+}
+
+void AEromSoftCharacter::CharacterMP_Up(int32 UpValue)
+{
+	CharacterStatusChanged(ECharacterStatusType::MP, UpValue);
+}
+
+void AEromSoftCharacter::CharacterMP_Down(int32 DownValue)
+{
+	CharacterStatusChanged(ECharacterStatusType::MP, (-1 * DownValue));
+}
+
+void AEromSoftCharacter::CharacterSP_Up(int32 UpValue)
+{
+	CharacterStatusChanged(ECharacterStatusType::SP, UpValue);
+}
+
+void AEromSoftCharacter::CharacterSP_Down(int32 DownValue)
+{
+	CharacterStatusChanged(ECharacterStatusType::SP, (-1 * DownValue));
+}
+
+void AEromSoftCharacter::CharacterStatusChanged(ECharacterStatusType eType, int32 Value)
+{
+	switch (eType)
+	{
+	case ECharacterStatusType::HP:
+		CharacterStatus.currentHealth = CharacterStatus.currentHealth + Value;
+
+		if (CharacterStatus.currentHealth >= CharacterStatus.maxHealth)
+		{
+			CharacterStatus.currentHealth = CharacterStatus.maxHealth;
+		}
+
+		if (CharacterStatus.currentHealth <= 0)
+		{
+			CharacterStatus.currentHealth = 0;
+		}
+
+		break;
+	case ECharacterStatusType::MP:
+		CharacterStatus.currentMana = CharacterStatus.currentMana + Value;
+
+		if (CharacterStatus.currentMana >= CharacterStatus.maxMana)
+		{
+			CharacterStatus.currentMana = CharacterStatus.maxMana;
+		}
+
+		if (CharacterStatus.currentMana <= 0)
+		{
+			CharacterStatus.currentMana = 0;
+		}
+
+		break;
+	case ECharacterStatusType::SP:
+		CharacterStatus.currentStamina = CharacterStatus.currentStamina + Value;
+
+		if (CharacterStatus.currentStamina >= CharacterStatus.maxStamina)
+		{
+			CharacterStatus.currentStamina = CharacterStatus.maxStamina;
+		}
+
+		if (CharacterStatus.currentStamina <= 0)
+		{
+			CharacterStatus.currentStamina = 0;
+		}
+
+		break;
+	case ECharacterStatusType::ECharacterStatusTypeMax:
+		break;
+	default:
+		break;
+	}
+
+	if (CharacterStatChangedDeligate.IsBound())
+	{
+		CharacterStatChangedDeligate.Execute();
+	}	
+}
+
+void AEromSoftCharacter::PrintLog()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Current HP : %d"), CharacterStatus.currentHealth);
+	UE_LOG(LogTemp, Warning, TEXT("Current MP : %d"), CharacterStatus.currentMana);
+	UE_LOG(LogTemp, Warning, TEXT("Current SP : %d"), CharacterStatus.currentStamina);
+}
