@@ -68,12 +68,12 @@ void AEromSoftCharacter::BeginPlay()
 		}
 	}
 
-	InitializeCharacterStatus();
+	//InitializeCharacterStatus();
 }
 
-void AEromSoftCharacter::Tick(float DeltaTime)
-{
-}
+//void AEromSoftCharacter::Tick(float DeltaTime)
+//{
+//}
 
 //////////////////////////////////////////////////////////////////////////
 // Input
