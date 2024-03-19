@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "CharacterStatusStruct.h"
 #include "EromSoftCharacter.generated.h"
 
 class USpringArmComponent;
@@ -45,6 +46,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Status, meta = (AllowPrivateAccess = "true"))
+	FCharacterStat CharacterStatus;
 
 public:
 	AEromSoftCharacter();
@@ -74,5 +77,9 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+	virtual void InitializeCharacterStatus() PURE_VIRTUAL(AEromSoftCharacter::InitializeCharacterStatus, return;);
+
+	UFUNCTION(BlueprintCallable)
+	FCharacterStat GetCharacterStatus() { return CharacterStatus; };
 };
 

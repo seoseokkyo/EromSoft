@@ -3,3 +3,6 @@
 
 #include "MaleniaCharacter.h"
 
+void AMaleniaCharacter::InitializeCharacterStatus()
+{
+}

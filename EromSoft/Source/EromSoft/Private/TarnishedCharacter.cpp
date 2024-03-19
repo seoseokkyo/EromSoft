@@ -26,6 +26,7 @@ void ATarnishedCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
 }
 
 void ATarnishedCharacter::Tick(float DeltaTime)
@@ -36,6 +37,27 @@ void ATarnishedCharacter::Tick(float DeltaTime)
 	}
 }
 
+void ATarnishedCharacter::InitializeCharacterStatus()
+{
+	CharacterStatus.CharacterName = L"Tarnished";
+	CharacterStatus.strength = 10;
+	CharacterStatus.endurance = 10;
+	CharacterStatus.AddedHealthPoint = 10;
+	CharacterStatus.AddedStaminaPoint = 10;
+
+	CharacterStatus.maxHealth = 100 + (CharacterStatus.AddedHealthPoint * 10);
+	CharacterStatus.maxStamina = 100 + (CharacterStatus.AddedStaminaPoint * 10);
+
+	CharacterStatus.currentHealth = CharacterStatus.maxHealth;
+	CharacterStatus.currentStamina = CharacterStatus.maxStamina;
+
+	UE_LOG(LogTemp, Warning, TEXT("Name		:	%s"), *CharacterStatus.CharacterName);
+	UE_LOG(LogTemp, Warning, TEXT("Str		:	%d"), CharacterStatus.strength);
+	UE_LOG(LogTemp, Warning, TEXT("Endu		:	%d"), CharacterStatus.endurance);
+	UE_LOG(LogTemp, Warning, TEXT("MaxHP	:	%d"), CharacterStatus.maxHealth);
+	UE_LOG(LogTemp, Warning, TEXT("MaxHP	:	%d"), CharacterStatus.maxStamina);
+}
+
 
 void ATarnishedCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -44,15 +66,15 @@ void ATarnishedCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
 
-		// Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		//// Jumping
+		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
-		// Moving
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATarnishedCharacter::Move);
+		//// Moving
+		//EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATarnishedCharacter::Move);
 
-		// Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATarnishedCharacter::Look);
+		//// Looking
+		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATarnishedCharacter::Look);
 
 		// Spacebar(Walk,Run / Rolling)
 		EnhancedInputComponent->BindAction(SpacebarAction, ETriggerEvent::Started, this, &ATarnishedCharacter::SpacebarPressed);

@@ -14,4 +14,6 @@ class EROMSOFT_API AMaleniaCharacter : public AEromSoftCharacter
 {
 	GENERATED_BODY()
 	
+
+	void InitializeCharacterStatus() override;
 };

@@ -26,6 +26,7 @@ class EROMSOFT_API ATarnishedCharacter : public AEromSoftCharacter
 
 	virtual void Tick(float DeltaTime) override;
 
+	void InitializeCharacterStatus() override;
 
 	// Walk&Run / Rolling Function
 	bool bIsSpacebarPressed = false;

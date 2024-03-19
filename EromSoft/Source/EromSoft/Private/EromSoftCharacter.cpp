@@ -67,6 +67,8 @@ void AEromSoftCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	InitializeCharacterStatus();
 }
 
 void AEromSoftCharacter::Tick(float DeltaTime)
