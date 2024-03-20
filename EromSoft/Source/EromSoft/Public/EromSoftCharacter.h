@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -18,6 +18,7 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 DECLARE_DYNAMIC_DELEGATE(FCharacterStatChanged);
+//DECLARE_DYNAMIC_DELEGATE(FCharacterDead);
 
 UCLASS(config=Game)
 class AEromSoftCharacter : public ACharacter
@@ -53,7 +54,14 @@ public:
 	FCharacterStat CharacterStatus;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status, meta = (AllowPrivateAccess = "true"))
-	FCharacterStatChanged CharacterStatChangedDeligate;
+	FCharacterStatChanged	CharacterStatChangedDeligate;
+
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status, meta = (AllowPrivateAccess = "true"))
+	//FCharacterDead			CharacterDeadDeligate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status, meta = (AllowPrivateAccess = "true"))
+	bool bIsNeedToSpawn;
 
 public:
 	AEromSoftCharacter();
