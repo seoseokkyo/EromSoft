@@ -18,6 +18,18 @@ class EROMSOFT_API ATarnishedCharacter : public AEromSoftCharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SpacebarAction;
 
+	/** Interact Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
+
+	/** LightAttack Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* LightAttackAction;
+
+	/** ToggleCombat Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ToggleCombatAction;
+
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -30,8 +42,17 @@ class EROMSOFT_API ATarnishedCharacter : public AEromSoftCharacter
 
 	// Walk&Run / Rolling Function
 	bool bIsSpacebarPressed = false;
+	bool bIsDidging = false;
 	float spacebarPressedTime = 0.0f;
 	void SpacebarPressed(const FInputActionValue& Value);
 	void SpacebarReleased(const FInputActionValue& Value);
 
+	// Combat State Toggle
+	bool bIsTogglingCombat = false;
+
+	bool CheckPerformToggleCombatMotion();
+	bool CheckPerformAttack();
+	bool CheckPerformDodge();
+	void PerformAttack(int32 attackIndex, bool bUseRandomIndex);
+	void PerformDodge(int32 montageIndex, bool bUseRandomIndex);
 };

@@ -62,6 +62,11 @@ void ATarnishedCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		// Spacebar(Walk,Run / Rolling)
 		EnhancedInputComponent->BindAction(SpacebarAction, ETriggerEvent::Started, this, &ATarnishedCharacter::SpacebarPressed);
 		EnhancedInputComponent->BindAction(SpacebarAction, ETriggerEvent::Completed, this, &ATarnishedCharacter::SpacebarReleased);
+
+
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, this, &ATarnishedCharacter::SpacebarReleased);
+		EnhancedInputComponent->BindAction(LightAttackAction, ETriggerEvent::Completed, this, &ATarnishedCharacter::SpacebarReleased);
+		EnhancedInputComponent->BindAction(ToggleCombatAction, ETriggerEvent::Completed, this, &ATarnishedCharacter::SpacebarReleased);
 	}
 	else
 	{
@@ -90,4 +95,27 @@ void ATarnishedCharacter::SpacebarReleased(const FInputActionValue& Value)
 	}
 
 	this->GetCharacterMovement()->MaxWalkSpeed = 300;
+}
+
+bool ATarnishedCharacter::CheckPerformToggleCombatMotion()
+{
+	return false;
+}
+
+bool ATarnishedCharacter::CheckPerformAttack()
+{
+	return false;
+}
+
+bool ATarnishedCharacter::CheckPerformDodge()
+{
+	return false;
+}
+
+void ATarnishedCharacter::PerformAttack(int32 attackIndex, bool bUseRandomIndex)
+{
+}
+
+void ATarnishedCharacter::PerformDodge(int32 montageIndex, bool bUseRandomIndex)
+{
 }

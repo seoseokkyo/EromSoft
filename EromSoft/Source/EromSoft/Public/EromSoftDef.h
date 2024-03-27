@@ -7,3 +7,6 @@ enum class ECharacterStatusType
 	SP,
 	ECharacterStatusTypeMax
 };
+
+//DECLARE_DELEGATE_OneParam(FOnHitDeligate, FHitResult);
+DECLARE_DYNAMIC_DELEGATE_OneParam(FOnHitDeligate, FHitResult, lastHitStruct);
