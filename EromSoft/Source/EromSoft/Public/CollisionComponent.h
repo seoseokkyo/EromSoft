@@ -8,6 +8,8 @@
 #include "EromSoftDef.h"
 #include "CollisionComponent.generated.h"
 
+
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class EROMSOFT_API UCollisionComponent : public UActorComponent
 {
@@ -52,7 +54,6 @@ public:
 	FHitResult			lastHitStruct;
 	AActor*				hittedActor;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Deligate")
 	FOnHitDeligate onHitDeligate;
 
 	// Functions
