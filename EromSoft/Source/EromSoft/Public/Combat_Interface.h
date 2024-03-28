@@ -23,9 +23,18 @@ class EROMSOFT_API ICombat_Interface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
-	virtual void		ContinueAttack()		PURE_VIRTUAL(ICombat_Interface::ContinueAttack, return;);
-	virtual void		ResetAttack()			PURE_VIRTUAL(ICombat_Interface::ResetAttack, return;);
-	virtual FRotator	GetDesireRotation()		PURE_VIRTUAL(ICombat_Interface::GetDesireRotation, return FRotator(0););
-	virtual void		ResetCombat()			PURE_VIRTUAL(ICombat_Interface::ResetCombat, return;);
-	virtual bool		CanReceiveDamage()		PURE_VIRTUAL(ICombat_Interface::CanReceiveDamage, return false;);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ICombat_Interface")
+	void ContinueAttack();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ICombat_Interface")
+	void ResetAttack();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ICombat_Interface")
+	FRotator GetDesireRotation();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ICombat_Interface")
+	void ResetCombat();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ICombat_Interface")
+	bool CanReceiveDamage();
 };

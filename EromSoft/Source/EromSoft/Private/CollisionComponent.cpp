@@ -15,10 +15,15 @@ UCollisionComponent::UCollisionComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	this->startSocketName = FName("StartSocket");
-	this->endSocketName = FName("EndSocket");
+	this->startSocketName = FName("Weapon Start");
+	this->endSocketName = FName("Weapon End");
 	this->traceRadius = 20;
 	this->drawDebugType = EDrawDebugTrace::Persistent;
+
+	collisionObjectTypes.Reset();
+	collisionObjectTypes.Add(EObjectTypeQuery::ObjectTypeQuery3);
+
+
 	// ...
 }
 

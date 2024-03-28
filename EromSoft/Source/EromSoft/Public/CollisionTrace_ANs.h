@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include <Animation/AnimNotifies/AnimNotifyState.h>
+#include <Animation/AnimNotifies/AnimNotify.h>
 #include "CollisionTrace_ANs.generated.h"
 
 /**
@@ -14,5 +15,6 @@ class EROMSOFT_API UCollisionTrace_ANs : public UAnimNotifyState
 {
 	GENERATED_BODY()
 	
+	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 };

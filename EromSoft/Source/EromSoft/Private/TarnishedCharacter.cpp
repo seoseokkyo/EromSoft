@@ -11,13 +11,36 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Though_Sword.h"
+#include "CombatComponent.h"
+#include <GameFramework/Character.h>
+#include <GameFramework/CharacterMovementComponent.h>
+#include <Animation/AnimMontage.h>
 
+
+ATarnishedCharacter::ATarnishedCharacter()
+{
+	//this->GetMesh()->SetAnimInstanceClass(ConstructorHelpers::FObjectFinder<UAnimInstance>(TEXT("/Game/Characters/Mannequins/Animations/ABP_Manny.ABP_Manny")).Object->StaticClass());
+	//this->GetMesh()->SetAnimInstanceClass();
+}
 
 void ATarnishedCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
 
+	FActorSpawnParameters spawnParam;
+	spawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	spawnParam.TransformScaleMethod = ESpawnActorScaleMethod::MultiplyWithRoot;
+	spawnParam.Owner = this;
+	spawnParam.Instigator = this;
+
+	AThough_Sword* equipment = GetWorld()->SpawnActor<AThough_Sword>(AThough_Sword::StaticClass(), GetActorTransform(), spawnParam);
+
+	if (equipment)
+	{
+		equipment->OnEquipped();
+	}
 }
 
 void ATarnishedCharacter::Tick(float DeltaTime)
@@ -26,6 +49,8 @@ void ATarnishedCharacter::Tick(float DeltaTime)
 	{
 		spacebarPressedTime += DeltaTime;
 	}
+
+	CharacterSP_Up(15);
 }
 
 void ATarnishedCharacter::InitializeCharacterStatus()
@@ -50,7 +75,6 @@ void ATarnishedCharacter::InitializeCharacterStatus()
 	UE_LOG(LogTemp, Warning, TEXT("MaxHP	:	%d"), CharacterStatus.maxHealth);
 	UE_LOG(LogTemp, Warning, TEXT("MaxHP	:	%d"), CharacterStatus.maxStamina);
 }
-
 
 void ATarnishedCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -91,7 +115,12 @@ void ATarnishedCharacter::SpacebarReleased(const FInputActionValue& Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("당신은 굴렀습니다."));
 		// 구르기 구현
+		if (DodgeAbleCheck())
+		{
+			PerformDodge(0, false);
 
+			CharacterSP_Down(20);
+		}
 	}
 
 	this->GetCharacterMovement()->MaxWalkSpeed = 300;
@@ -118,4 +147,52 @@ void ATarnishedCharacter::PerformAttack(int32 attackIndex, bool bUseRandomIndex)
 
 void ATarnishedCharacter::PerformDodge(int32 montageIndex, bool bUseRandomIndex)
 {
+	// montageIndex가 MainWeapon에 있는 회피 모션 개수보타 크면 0번인덱스, 그렇지 않으면 montageIndex를 씀
+	int32 selectedIndex = montageIndex > combatComponent->GetMainWeapon()->dodgeMontages.Num() ? 0 : montageIndex;
+
+	// 랜덤 인덱스 생성
+	int32 montagesSize = combatComponent->GetMainWeapon()->dodgeMontages.Num();
+	int32 randIndex = FMath::RandRange(0, montagesSize-1);
+
+	// bUseRandomIndex가 true가 들어오면 인덱스를 랜덤으로 생성한것을 사용, 그렇지 않으면 선택된 인덱스 사용
+	UAnimMontage* selectedAnimMontage = bUseRandomIndex ? combatComponent->GetMainWeapon()->dodgeMontages[randIndex] : combatComponent->GetMainWeapon()->dodgeMontages[selectedIndex];
+
+	if (IsValid(selectedAnimMontage))
+	{
+		bIsDodging = true;
+
+		PlayAnimMontage(selectedAnimMontage);
+
+		UE_LOG(LogTemp, Warning, TEXT("Rolled"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("PerformDodge - selectedAnimMontage is not Valid"));
+	}
+}
+
+bool ATarnishedCharacter::DodgeAbleCheck()
+{
+	bool bAttackCheck = combatComponent->bAttacking;
+	bool bTogglingCheck = bIsTogglingCombat;
+	bool bIsDodgingCheck = bIsDodging;
+	bool bIsDeadCheck = bDead;
+	bool bIsDisableCheck = bIsDisable;
+	bool bFallingCheck = GetCharacterMovement()->IsFalling();
+
+	if ((bAttackCheck || bTogglingCheck || bIsDodgingCheck || bIsDeadCheck || bIsDisableCheck || bFallingCheck) == true)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DodgeAbleCheck - DodgeFailed - State"));
+		return false;		
+	}
+
+	if (CharacterStatus.currentStamina > 10)
+	{
+		return true;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DodgeAbleCheck - DodgeFailed - Stamina"));
+		return false;
+	}	
 }

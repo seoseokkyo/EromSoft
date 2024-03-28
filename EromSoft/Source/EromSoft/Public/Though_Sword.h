@@ -14,4 +14,6 @@ class EROMSOFT_API AThough_Sword : public ABaseWeapon
 {
 	GENERATED_BODY()
 	
+public:
+	AThough_Sword();
 };

@@ -28,6 +28,9 @@ enum class E_WeaponType : uint8
 	E_WeaponTypeMax
 };
 
+
+class IAnimInstance_Interface;
+
 UCLASS()
 class EROMSOFT_API ABaseWeapon : public ABaseEquippable
 {
@@ -49,7 +52,7 @@ public:
 public:
 
 	// Variables
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Initialization")
 	FName handSocketName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Initialization")
@@ -74,6 +77,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	UCombatComponent* combatComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Initialization")
 	float weaponDamage;
 
 	// Functions

@@ -6,5 +6,21 @@
 
 void UResetCombat_AN::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
-	Cast<ICombat_Interface>(MeshComp->GetOwner())->ResetCombat();
+	if (Cast<ICombat_Interface>(MeshComp->GetOwner()))
+	{
+		ICombat_Interface::Execute_ResetCombat(MeshComp->GetOwner());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UResetCombat_AN::Notify - NullptrErr"));
+	}
+	//auto checkValid = Cast<ICombat_Interface>(MeshComp->GetOwner());
+	//if (checkValid != nullptr)
+	//{
+	//	checkValid->ResetCombat();
+	//}
+	//else
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("UResetCombat_AN::Notify - NullptrErr"));
+	//}
 }

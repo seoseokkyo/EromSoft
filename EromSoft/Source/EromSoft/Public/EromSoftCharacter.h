@@ -20,6 +20,8 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 DECLARE_DYNAMIC_DELEGATE(FCharacterStatChanged);
 //DECLARE_DYNAMIC_DELEGATE(FCharacterDead);
 
+class UCombatComponent;
+
 UCLASS(config=Game)
 class AEromSoftCharacter : public ACharacter
 {
@@ -51,14 +53,15 @@ public:
 	UInputAction* LookAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status, meta = (AllowPrivateAccess = "true"))
-	FCharacterStat CharacterStatus;
+	FCharacterStat CharacterStatus = {};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status, meta = (AllowPrivateAccess = "true"))
 	FCharacterStatChanged	CharacterStatChangedDeligate;
 
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status, meta = (AllowPrivateAccess = "true"))
-	//FCharacterDead			CharacterDeadDeligate;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UCombatComponent* combatComponent;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status, meta = (AllowPrivateAccess = "true"))
 	bool bIsNeedToSpawn;

@@ -4,11 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "EromSoftCharacter.h"
+
 #include "TarnishedCharacter.generated.h"
 
 /**
  * 
  */
+
+class ABaseEquippable;
+class ABaseWeapon;
+class AThough_Sword;
+
 UCLASS()
 class EROMSOFT_API ATarnishedCharacter : public AEromSoftCharacter
 {
@@ -40,19 +46,33 @@ class EROMSOFT_API ATarnishedCharacter : public AEromSoftCharacter
 
 	void InitializeCharacterStatus() override;
 
+public:
+
+	ATarnishedCharacter();
+
+	// Variables
+	bool bIsTogglingCombat = false;
+	bool bIsDodging = false;
+	bool bDead = false;
+	bool bIsDisable = false;
+
+	// Functions
+
 	// Walk&Run / Rolling Function
 	bool bIsSpacebarPressed = false;
-	bool bIsDidging = false;
+	
 	float spacebarPressedTime = 0.0f;
 	void SpacebarPressed(const FInputActionValue& Value);
 	void SpacebarReleased(const FInputActionValue& Value);
 
 	// Combat State Toggle
-	bool bIsTogglingCombat = false;
+	
 
 	bool CheckPerformToggleCombatMotion();
 	bool CheckPerformAttack();
 	bool CheckPerformDodge();
 	void PerformAttack(int32 attackIndex, bool bUseRandomIndex);
 	void PerformDodge(int32 montageIndex, bool bUseRandomIndex);
+
+	bool DodgeAbleCheck();
 };

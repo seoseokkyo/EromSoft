@@ -6,5 +6,13 @@
 
 void UContinueAttack_AN::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
-	Cast<ICombat_Interface>(MeshComp->GetOwner())->ContinueAttack();
+	auto checkValid = Cast<ICombat_Interface>(MeshComp->GetOwner());
+	if (checkValid != nullptr)
+	{
+		checkValid->ContinueAttack();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UContinueAttack_AN::Notify - NullptrErr"));
+	}
 }

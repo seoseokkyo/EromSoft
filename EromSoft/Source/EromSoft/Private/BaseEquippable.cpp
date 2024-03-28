@@ -17,10 +17,10 @@ ABaseEquippable::ABaseEquippable()
 	SetRootComponent(rootComp);
 
 	ItemSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("ItemSkeletalMesh"));
-	ItemSkeletalMesh->SetupAttachment(rootComp);
+	ItemSkeletalMesh->SetupAttachment(rootComp);	
 
 	ItemStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemStaticMesh"));
-	ItemStaticMesh->SetupAttachment(rootComp);
+	ItemStaticMesh->SetupAttachment(rootComp); 
 }
 
 // Called when the game starts or when spawned
@@ -69,7 +69,10 @@ void ABaseEquippable::OnEquipped()
 {
 	bIsEquipped = true;
 
-	AttachActor(AttachSocketName);
+	if (AttachSocketName != "")
+	{
+		AttachActor(AttachSocketName);
+	}	
 }
 
 void ABaseEquippable::OnUnEquipped()

@@ -25,6 +25,6 @@ class EROMSOFT_API IInteractable_Interface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
-	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="IInteractable_Interface")
-	virtual void Interact(AActor* callerActor) PURE_VIRTUAL(IInteractable_Interface::Interact, return;);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="IInteractable_Interface")
+	void Interact(AActor* callerActor);
 };

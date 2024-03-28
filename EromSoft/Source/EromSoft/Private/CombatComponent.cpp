@@ -37,28 +37,13 @@ void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UCombatComponent::SetMainWeapon(ABaseWeapon* baseWeapon)
 {
-	//<< 이거 블루프린트의 시퀀스라는 애랑 같은 방식인지도 잘 모르겠고 스레드까지 쓸 이유가 없는 기능이니까 일단 번역 끝나고 테스트하면서 그냥 합치는것도
-	//<< 잘 안되네 그냥 합치자
-	//std::thread threadBeforeWeaponDestroy(ThreadFuncBeforeWeaponDestroy);
-	//std::thread threadSetMainWeapon(ThreadFuncSetMainWeapon, baseWeapon);
-
-	UE_LOG(LogTemp, Warning, TEXT("ThreadFuncBeforeWeaponDestroy Start"));
-
 	if (IsValid(mainWeapon))
 	{
 		mainWeapon->OnUnEquipped();
 		mainWeapon->Destroy();
-
-		UE_LOG(LogTemp, Warning, TEXT("ThreadFuncSetMainWeapon Start"));
-		mainWeapon = baseWeapon;
-		UE_LOG(LogTemp, Warning, TEXT("ThreadFuncSetMainWeapon End"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("MainWeapon is Not Valid"));
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("ThreadFuncBeforeWeaponDestroy End"));
+	mainWeapon = baseWeapon;
 }
 
 ABaseWeapon* UCombatComponent::GetMainWeapon()

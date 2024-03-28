@@ -24,9 +24,9 @@ class EROMSOFT_API IAnimInstance_Interface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="IAnimInstance_Interface")
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void UpdateCombatType(E_WeaponType eWeaponType);
 
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="IAnimInstance_Interface")
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void UpdateCombatEnabled(bool bEnable);
 };

@@ -8,11 +8,22 @@
 void URotateCharactor_ANS::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
 {
 	float interpSpeed = 720.0f;
+	FRotator ownerRotator;
+	FRotator desireRotator;
 
-	FRotator ownerRotator = MeshComp->GetOwner()->GetActorRotation();
-	FRotator desireRotator = Cast<ICombat_Interface>(MeshComp->GetOwner())->GetDesireRotation();	
+	auto ownerCheck = Cast<ICombat_Interface>(MeshComp->GetOwner());
 
-	FRotator interpRotator = UKismetMathLibrary::RInterpTo_Constant(ownerRotator, desireRotator, FrameDeltaTime, interpSpeed);
+	if (MeshComp->GetOwner() && ownerCheck)
+	{
+		ownerRotator = MeshComp->GetOwner()->GetActorRotation();
+		desireRotator = ownerCheck->GetDesireRotation();
 
-	MeshComp->GetOwner()->SetActorRotation(interpRotator);
+		FRotator interpRotator = UKismetMathLibrary::RInterpTo_Constant(ownerRotator, desireRotator, FrameDeltaTime, interpSpeed);
+
+		MeshComp->GetOwner()->SetActorRotation(interpRotator);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("URotateCharactor_ANS::NotifyTick - NullptrErr"));
+	}
 }

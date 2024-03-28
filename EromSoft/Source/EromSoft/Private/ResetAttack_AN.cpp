@@ -6,5 +6,13 @@
 
 void UResetAttack_AN::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
-	Cast<ICombat_Interface>(MeshComp->GetOwner())->ResetAttack();
+	auto checkValid = Cast<ICombat_Interface>(MeshComp->GetOwner());
+	if (checkValid != nullptr)
+	{
+		checkValid->ResetAttack();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UResetAttack_AN::Notify - NullptrErr"));
+	}
 }
