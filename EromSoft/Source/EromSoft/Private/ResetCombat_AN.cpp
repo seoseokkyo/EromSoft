@@ -3,24 +3,25 @@
 
 #include "ResetCombat_AN.h"
 #include "Combat_Interface.h"
+#include "TarnishedCharacter.h"
 
 void UResetCombat_AN::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
-	if (Cast<ICombat_Interface>(MeshComp->GetOwner()))
+	if (MeshComp != nullptr)
 	{
-		ICombat_Interface::Execute_ResetCombat(MeshComp->GetOwner());
+		auto charCheck = Cast<ATarnishedCharacter>(MeshComp->GetOwner());
+
+		if (charCheck != nullptr)
+		{
+			if (Cast<ICombat_Interface>(MeshComp->GetOwner()))
+			{
+				ICombat_Interface::Execute_ResetCombat(charCheck);
+				UE_LOG(LogTemp, Warning, TEXT("UResetCombat_AN::Notify - Called"));
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("UResetCombat_AN::Notify - NullptrErr"));
+			}
+		}
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("UResetCombat_AN::Notify - NullptrErr"));
-	}
-	//auto checkValid = Cast<ICombat_Interface>(MeshComp->GetOwner());
-	//if (checkValid != nullptr)
-	//{
-	//	checkValid->ResetCombat();
-	//}
-	//else
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("UResetCombat_AN::Notify - NullptrErr"));
-	//}
 }

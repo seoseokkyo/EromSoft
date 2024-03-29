@@ -7,7 +7,6 @@
 #include "CollisionComponent.h"
 #include "CombatComponent.h"
 #include "Combat_Interface.h"
-#include "AnimInstance_Interface.h"
 
 ABaseWeapon::ABaseWeapon()
 {
@@ -67,23 +66,19 @@ void ABaseWeapon::OnEquipped()
 
 			combatComponent->SetMainWeapon(this);
 
-			//Cast<IAnimInstance_Interface>(Cast<ACharacter>(GetOwner())->GetMesh()->GetAnimInstance())->UpdateCombatType(eWeaponType);
-						
 			ACharacter* characterPtr = Cast<ACharacter>(GetOwner());
 			if (characterPtr)
 			{
 				USkeletalMeshComponent* skeletalMeshComponent = characterPtr->GetMesh();
 				if (skeletalMeshComponent)
 				{
-					UClass* animInstance = skeletalMeshComponent->GetAnimClass();
-					
-					bool bInterfaceCheck = animInstance->ImplementsInterface(UAnimInstance_Interface::StaticClass());
-					
-					if (bInterfaceCheck)
+					auto animInstance = skeletalMeshComponent->GetAnimClass();
+
+					if (animInstance->ImplementsInterface(UAnimInstance_Interface::StaticClass()))
 					{
 						IAnimInstance_Interface::Execute_UpdateCombatType(animInstance, eWeaponType);
-					
-						UE_LOG(LogTemp, Warning, TEXT("%s Send UpdateCombatType"), *animInstance->GetName());
+
+						UE_LOG(LogTemp, Warning, TEXT("%s Send UUpdateCombatType"), *animInstance->GetName());
 					}
 					else
 					{
@@ -140,4 +135,14 @@ void ABaseWeapon::SimulateWeaponPhysics()
 {
 	GetItemMesh()->SetCollisionProfileName(FName("PhysicsActor"));
 	GetItemMesh()->SetSimulatePhysics(true);
+}
+
+void ABaseWeapon::UpdateCombatType_Implementation(E_WeaponType eWeaponType)
+{
+	this->eWeaponType = eWeaponType;
+}
+
+void ABaseWeapon::UpdateCombatEnabled_Implementation(bool bEnable)
+{
+	//this->bEnable = eWeaponType;
 }

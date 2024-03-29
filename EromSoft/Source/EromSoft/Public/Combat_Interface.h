@@ -34,6 +34,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ICombat_Interface")
 	void ResetCombat();
+	virtual void ResetCombat_Implementation() PURE_VIRTUAL(ICombat_Interface::ResetCombat_Implementation, return;);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ICombat_Interface")
 	bool CanReceiveDamage();

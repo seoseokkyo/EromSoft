@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseEquippable.h"
+#include "AnimInstance_Interface.h"
 #include "BaseWeapon.generated.h"
 
 /**
@@ -28,11 +29,8 @@ enum class E_WeaponType : uint8
 	E_WeaponTypeMax
 };
 
-
-class IAnimInstance_Interface;
-
 UCLASS()
-class EROMSOFT_API ABaseWeapon : public ABaseEquippable
+class EROMSOFT_API ABaseWeapon : public ABaseEquippable, public IAnimInstance_Interface
 {
 	GENERATED_BODY()
 	
@@ -88,4 +86,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SimulateWeaponPhysics();
+
+	virtual void UpdateCombatType_Implementation(E_WeaponType eWeaponType) override;
+	virtual void UpdateCombatEnabled_Implementation(bool bEnable) override;
 };

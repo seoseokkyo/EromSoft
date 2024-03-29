@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "EromSoftCharacter.h"
+#include "Combat_Interface.h"
+#include "AnimInstance_Interface.h"
 
 #include "TarnishedCharacter.generated.h"
 
@@ -16,7 +18,7 @@ class ABaseWeapon;
 class AThough_Sword;
 
 UCLASS()
-class EROMSOFT_API ATarnishedCharacter : public AEromSoftCharacter
+class EROMSOFT_API ATarnishedCharacter : public AEromSoftCharacter, public ICombat_Interface
 {
 	GENERATED_BODY()
 	
@@ -75,4 +77,6 @@ public:
 	void PerformDodge(int32 montageIndex, bool bUseRandomIndex);
 
 	bool DodgeAbleCheck();
+
+	virtual void ResetCombat_Implementation() override;
 };

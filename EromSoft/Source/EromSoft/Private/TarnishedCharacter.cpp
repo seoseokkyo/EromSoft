@@ -16,12 +16,14 @@
 #include <GameFramework/Character.h>
 #include <GameFramework/CharacterMovementComponent.h>
 #include <Animation/AnimMontage.h>
+#include <Animation/AnimInstance.h>
 
 
 ATarnishedCharacter::ATarnishedCharacter()
 {
-	//this->GetMesh()->SetAnimInstanceClass(ConstructorHelpers::FObjectFinder<UAnimInstance>(TEXT("/Game/Characters/Mannequins/Animations/ABP_Manny.ABP_Manny")).Object->StaticClass());
-	//this->GetMesh()->SetAnimInstanceClass();
+	this->GetMesh()->SetSkeletalMesh(ConstructorHelpers::FObjectFinder<USkeletalMesh>(TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny.SKM_Manny")).Object);
+
+	this->GetMesh()->SetAnimation(ConstructorHelpers::FObjectFinder<UAnimationAsset>(TEXT("/Game/Characters/Mannequins/Animations/ABP_Manny.ABP_Manny")).Object);
 }
 
 void ATarnishedCharacter::BeginPlay()
@@ -113,8 +115,6 @@ void ATarnishedCharacter::SpacebarReleased(const FInputActionValue& Value)
 
 	if (spacebarPressedTime < 0.2)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("당신은 굴렀습니다."));
-		// 구르기 구현
 		if (DodgeAbleCheck())
 		{
 			PerformDodge(0, false);
@@ -195,4 +195,9 @@ bool ATarnishedCharacter::DodgeAbleCheck()
 		UE_LOG(LogTemp, Warning, TEXT("DodgeAbleCheck - DodgeFailed - Stamina"));
 		return false;
 	}	
+}
+
+void ATarnishedCharacter::ResetCombat_Implementation()
+{
+	bIsDodging = false;
 }

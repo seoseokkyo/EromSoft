@@ -26,7 +26,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void UpdateCombatType(E_WeaponType eWeaponType);
+	virtual void UpdateCombatType_Implementation(E_WeaponType eWeaponType) PURE_VIRTUAL(IAnimInstance_Interface::UpdateCombatType_Implementation, return;);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void UpdateCombatEnabled(bool bEnable);
+	virtual void UpdateCombatEnabled_Implementation(bool bEnable) PURE_VIRTUAL(IAnimInstance_Interface::UpdateCombatEnabled_Implementation, return;);
 };
